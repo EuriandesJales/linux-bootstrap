@@ -1,0 +1,9 @@
+Desenvolver um código que gera meu terminal da forma que cosutmo usar
+
+uv, ipyhthon, tmux zsh(plugins), fastfetch plugins de busca no google
+tldr micro (com plugins) 
+
+alias de update, limpar cache pacman
+alias youtube dl e git
+
+script de pesquisa no terminal

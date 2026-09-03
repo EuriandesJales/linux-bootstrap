@@ -1,0 +1,277 @@
+# Tecla mod windowns 
+set $mod Mod4
+
+#----------------------------------------
+# configuralçoes do desenho da janela
+#----------------------------------------
+font pango:monospace 8
+# minha modificação retira o titulo das janelas 
+default_border pixel
+default_floating_border normal
+hide_edge_borders smart
+#------------------------------
+
+#janelas que devem ser exibidas em floot
+for_window [class="Lxappearance"]     $is_float
+for_window [class="Nitrogen"]         $is_float
+for_window [class="Gnome-calculator"] $is_float
+# coisas que rodam na inicialização
+# autostart xdg 
+exec --no-startup-id dex --autostart --environment i3
+# suspenção
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# Network manager interface na barra de status 
+exec --no-startup-id nm-applet
+# restaura walpeper
+exec nitrogen --restore
+#Inicia o clipbord
+#exec xfce4-clipman
+
+
+
+#--------------------------------------------------
+#       Teclas de atalhos para o sistema
+#---------------------------------------------------
+
+#               CONTROLE DE AUDIO 
+set $refresh_i3blocks killall -SIGUSR1 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
+
+#               Chama o Dmenu
+bindsym $mod+d exec --no-startup-id dmenu_run
+
+#			reinicia o i3blocks
+bindsym $mod+Shift+Alt_L+r exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
+
+#   faz com que as janelas abra em fullscream por defoult
+workspace_layout tabbed
+
+# -------------------------
+# RECARREGA CONFIGURAÇÕES
+# --------------------------
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+#-------------------------------------------------------------------
+#                       Teclas de brilho
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+
+
+#---------------------------------------------------------------------
+#                   TECLAS PARA ABRIR PROGRAMAS 
+#----------------------------------------------------------------------
+#executa o alacritty
+bindsym $mod+Return exec alacritty
+
+# abindo o firefox
+bindsym $mod+n exec firefox
+
+# abre o vscode 
+bindsym $mod+Shift+Return exec code
+
+# abre o mixer de audio 
+bindsym $mod+XF86AudioMute exec easyeffects
+# abre pamac
+bindsym $mod+Shift+a exec pamac
+#------------------------------------------------------------------
+#       TECLAS QUE ALTERAM MODO DE EXIBIÇÃO
+#------------------------------------------------------------------
+
+#	fixa janela para todas as areas de trabalho
+bindsym $mod+Shift+f sticky toggle
+
+# muda forma de container horizontal x Vertical
+bindsym $mod+Tab split toggle
+
+#Muda o layaut das janelas e um container/desktop stacked, tabbed, toggle split
+bindsym $mod+Shift+question layout toggle all
+
+# Janela no Modo Floot
+bindsym $mod+Shift+space floating toggle
+
+#--------------------------------------------------------
+#       movem localização da janela
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+#------------------------------------------------------
+#                CONTROLE DE FOCO
+#janela não fica em foco automaticamente
+focus_follows_mouse no
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+#muda qual janela esta em focu
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+ccedilla focus right
+#----------------------------------------------------------
+#		REAJUSTE DO TAMANHO DA JANELA
+bindsym $mod+Control Right           resize grow   width  5 px or 5 ppt
+bindsym $mod+Control Left           resize shrink width  5 px or 5 ppt
+bindsym $mod+Control Up           resize grow   height 5 px or 5 ppt
+bindsym $mod+Control Down           resize shrink height 5 px or 5 ppt
+
+#-----------------------------------------------------------
+
+#fecha janelas
+bindsym $mod+q kill
+bindsym $mod+f fullscreen toggle
+
+
+
+#-----------------------------------------------------------------
+#           CONFIGURAÇÕES DE AREAS DE TRABALHO
+#-----------------------------------------------------------------
+
+# NOMES DAS ARÉAS DE TRABALHO
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# mudar para desktops diferentes
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# mover janela para diferentes workspaces
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+#------------------------------------------------------------------
+#                configurações das barras de status
+#-----------------------------------------------------------------
+
+
+
+#			    i3status
+
+bar {
+	status_command i3status
+	colors {
+        background #000000
+        statusline #ffffff
+
+       focused_workspace  #4c7899 #285577 #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888T
+        urgent_workspace   #2f343a #900000 #ffffff
+        binding_mode       #2f343a #900000 #ffffff
+    }
+	strip_workspace_numbers yes
+}
+
+
+###################################################################
+#                               i3blocks
+#bar {
+    #status_command i3blocks -c ~/.config/i3blocks/config
+#}
+
+
+#--------------------------------------------------------=---------
+#                   APARECIA E THEMAS
+#------------------------------------------------------------------
+# Thema
+#set $exe_geany exec --no-startup-id env GTK_THEME=Arc-Dark geany
+
+# colors
+set $darker   #080910
+set $dark     #181920
+set $black    #2F343F
+set $darkgray #3B4252
+set $gray     #E7E8EB
+set $white    #F5F6F7
+set $red      #BF616A
+set $orange   #DBAB6B
+set $yellow   #EBCB8B
+set $green    #A3BE8C
+set $cyan     #88C0D0
+set $blue     #91B1D1
+set $darkblue #416181
+set $purple   #B48EAD
+
+# icons
+
+# editor       
+# menu         
+# document     
+# table        
+# code         
+# chat         
+# news         
+# monitor      
+# firefox      
+# chrome       
+# terminal     
+# window       
+# github       
+# whatsapp     
+# telegram     
+# hangout      
+# bank         
+# folder       
+# package      
+#
+# no preview...
+#
+# volume
+# play
+# music
+# video
+# email
+
+set $ico_bank     <span font='Font Awesome'>&#xf155;</span>
+set $ico_chat     <span font='Font Awesome'>&#xf27b;</span>
+set $ico_code     <span font='Font Awesome'>&#xf121;</span>
+set $ico_document <span font='Font Awesome'>&#xf0f6;</span>
+set $ico_editor   <span font='Font Awesome'>&#xf044;</span>
+set $ico_email    <span font='Font Awesome'>&#xf003;</span>
+set $ico_firefox  <span font='Font Awesome'>&#xf269;</span>
+set $ico_folder   <span font='Font Awesome'>&#xf115;</span>
+set $ico_github   <span font='Font Awesome'>&#xf09b;</span>
+set $ico_menu     <span font='Font Awesome'>&#xf0c9;</span>
+set $ico_monitor  <span font='Font Awesome'>&#xf26c;</span>
+set $ico_music    <span font='Font Awesome'>&#xf001;</span>
+set $ico_news     <span font='Font Awesome'>&#xf09e;</span>
+set $ico_play     <span font='Font Awesome'>&#xf01d;</span>
+set $ico_table    <span font='Font Awesome'>&#xf0ce;</span>
+set $ico_telegram <span font='Font Awesome'>&#xf1d9;</span>
+set $ico_terminal <span font='Font Awesome'>&#xf120;</span>
+set $ico_video    <span font='Font Awesome'>&#xf008;</span>
+set $ico_volume   <span font='Font Awesome'>&#xf028;</span>
+set $ico_whatsapp <span font='Font Awesome'>&#xf232;</span>
+
